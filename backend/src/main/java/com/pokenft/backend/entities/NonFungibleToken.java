@@ -8,7 +8,7 @@ public class NonFungibleToken {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private long id;
 	private String name;
 	private String description;
 	private String filepath;
@@ -19,8 +19,7 @@ public class NonFungibleToken {
 
 	}
 
-	public NonFungibleToken(Long id, String name, String description, String filepath, Double price, boolean owned) {
-		this.id = id;
+	public NonFungibleToken(String name, String description, String filepath, Double price, boolean owned) {
 		this.name = name;
 		this.description = description;
 		this.filepath = filepath;
@@ -28,11 +27,11 @@ public class NonFungibleToken {
 		this.owned = owned;
 	}
 
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
@@ -74,6 +73,18 @@ public class NonFungibleToken {
 
 	public void setOwned(boolean owned) {
 		this.owned = owned;
+	}
+
+	@Override
+	public String toString() {
+		return "NonFungibleToken{" +
+				"id=" + id +
+				", name='" + name + '\'' +
+				", description='" + description + '\'' +
+				", filepath='" + filepath + '\'' +
+				", price=" + price +
+				", owned=" + owned +
+				'}';
 	}
 
 }
