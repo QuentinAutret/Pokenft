@@ -3,26 +3,21 @@ package com.pokenft.backend.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "account")
-public class Account {
+@Table(name = "user")
+public class User {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
 	private long id;
+	private String pseudo;
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
 
-	public Account() {
+	public User() {
 
-	}
-
-	public Account(String firstName, String lastName, String email, String password) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
 	}
 
 	public long getId() {
@@ -31,6 +26,14 @@ public class Account {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
 	}
 
 	public String getFirstName() {
@@ -63,17 +66,6 @@ public class Account {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	@Override
-	public String toString() {
-		return "Account{" +
-				"id=" + id +
-				", firstName='" + firstName + '\'' +
-				", lastName='" + lastName + '\'' +
-				", email='" + email + '\'' +
-				", password='" + password + '\'' +
-				'}';
 	}
 
 }
