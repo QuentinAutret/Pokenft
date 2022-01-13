@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@RequestMapping("nft")
 public class NftController {
 
 	private final NftRepository nftRepository;
@@ -21,34 +22,35 @@ public class NftController {
 		this.userRepository = userRepository;
 	}
 
-	@PutMapping(path = "/addNft")
+	@PutMapping(path = "/add")
 	public @ResponseBody
-	String addUser(@RequestParam String name, @RequestParam String creator, @RequestParam String filePath, @RequestParam Double price) {
+	Nft add(@RequestParam String name, @RequestParam String creator, @RequestParam String filePath, @RequestParam Double price) {
 		Nft nft = new Nft();
 		nft.setName(name);
 		nft.setCreator(creator);
 		nft.setFilepath(filePath);
 		nft.setPrice(price);
 		nft.setForSale(true);
+		nft.setOwner(null);
 		nftRepository.save(nft);
-		return "{\n\t\"message\" : \"Nft : [" + name + "] created & saved.\"\n}";
+		return nft;
 	}
 
-	@GetMapping(path = "/getNft")
+	@GetMapping(path = "/get")
 	public @ResponseBody
-	Nft getNft(@RequestParam long id) {
+	Nft get(@RequestParam long id) {
 		return nftRepository.findById(id);
 	}
 
-	@GetMapping(path = "/getAllNfts")
+	@GetMapping(path = "/getAll")
 	public @ResponseBody
-	Iterable<Nft> getAllNfts() {
+	Iterable<Nft> getAll() {
 		return nftRepository.findAll();
 	}
 
-	@GetMapping(path = "/getAllOnSaleNfts")
+	@GetMapping(path = "/getAllOnSale")
 	public @ResponseBody
-	Iterable<Nft> getAllOnSaleNfts() {
+	Iterable<Nft> getAllOnSale() {
 		List<Nft> nftList = new ArrayList<>();
 		for (Nft nft : nftRepository.findAll()) {
 			if (nft.isForSale()) nftList.add(nft);
@@ -56,9 +58,9 @@ public class NftController {
 		return nftList;
 	}
 
-	@GetMapping(path = "getAllNftsOfUser")
+	@GetMapping(path = "getAllOfUser")
 	public @ResponseBody
-	Iterable<Nft> getAllNftsOfUser(@RequestParam long id) {
+	Iterable<Nft> getAllOfUser(@RequestParam long id) {
 		List<Nft> nftList = new ArrayList<>();
 		for (Nft nft : nftRepository.findAll()) {
 			if (nft.getOwner().getId() == id) nftList.add(nft);
@@ -66,24 +68,24 @@ public class NftController {
 		return nftList;
 	}
 
-	@DeleteMapping(path = "/deleteNft")
+	@DeleteMapping(path = "/delete")
 	public @ResponseBody
-	String deleteNft(@RequestParam long id) {
+	String delete(@RequestParam long id) {
 		Nft nft = nftRepository.findById(id);
-		nftRepository.delete(nft);
-		return "{\n\t\"message\" : \"Nft : [" + nft.getName() + "] delete & saved.\"\n}";
+		nftRepository.deleteById(id);
+		return "{\n\t\"message\" : \"L'entrée dans la base de données a été supprimée.\"\n}";
 	}
 
-	@DeleteMapping(path = "/deleteAllNfts")
+	@DeleteMapping(path = "/deleteAll")
 	public @ResponseBody
-	String deleteAllNfts() {
+	String deleteAll() {
 		nftRepository.deleteAll();
-		return "{\n\t\"message\" : \"All nfts have been deleted\"\n}";
+		return "{\n\t\"message\" : \"Toutes les entrées dans la base de données ont été supprimées.\"\n}";
 	}
 
-	@PostMapping(path = "/updateNft")
+	@PostMapping(path = "/update")
 	public @ResponseBody
-	Nft updateNft(@RequestParam long id, @RequestParam String name, @RequestParam String creator, @RequestParam String filePath, @RequestParam Double price, @RequestParam boolean forSale) {
+	Nft update(@RequestParam long id, @RequestParam String name, @RequestParam String creator, @RequestParam String filePath, @RequestParam Double price, @RequestParam boolean forSale) {
 		Nft nft = nftRepository.findById(id);
 		nft.setName(name);
 		nft.setCreator(creator);
@@ -94,7 +96,7 @@ public class NftController {
 		return nft;
 	}
 
-	@PostMapping(path = "/buyNft")
+	@PostMapping(path = "/buy")
 	public @ResponseBody
 	Nft buyNft(@RequestParam long nftId, @RequestParam long userId) {
 		User user = userRepository.findById(userId);
@@ -105,7 +107,7 @@ public class NftController {
 		return nft;
 	}
 
-	@PostMapping(path = "onSaleNft")
+	@PostMapping(path = "onSale")
 	public @ResponseBody
 	Nft onSaleNft(@RequestParam long id) {
 		Nft nft = nftRepository.findById(id);
@@ -114,7 +116,7 @@ public class NftController {
 		return nft;
 	}
 
-	@PostMapping(path = "sellNft")
+	@PostMapping(path = "sell")
 	public @ResponseBody
 	Nft sellNft(@RequestParam long nftId, @RequestParam long userId) {
 		User user = userRepository.findById(userId);
