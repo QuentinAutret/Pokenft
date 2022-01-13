@@ -83,24 +83,22 @@ public class NftController {
 
 	@PostMapping(path = "/updateNft")
 	public @ResponseBody
-	Nft updateNft(@RequestParam long id, @RequestParam String name, @RequestParam String creator, @RequestParam String filePath, @RequestParam Double price, @RequestParam boolean forSale, @RequestParam long userId) {
-		User user = userRepository.findById(userId);
+	Nft updateNft(@RequestParam long id, @RequestParam String name, @RequestParam String creator, @RequestParam String filePath, @RequestParam Double price, @RequestParam boolean forSale) {
 		Nft nft = nftRepository.findById(id);
 		nft.setName(name);
 		nft.setCreator(creator);
 		nft.setFilepath(filePath);
 		nft.setPrice(price);
 		nft.setForSale(forSale);
-		nft.setOwner(user);
 		nftRepository.save(nft);
 		return nft;
 	}
 
 	@PostMapping(path = "/buyNft")
 	public @ResponseBody
-	Nft buyNft(@RequestParam long id, @RequestParam long userId) {
+	Nft buyNft(@RequestParam long nftId, @RequestParam long userId) {
 		User user = userRepository.findById(userId);
-		Nft nft = nftRepository.findById(id);
+		Nft nft = nftRepository.findById(nftId);
 		nft.setForSale(false);
 		nft.setOwner(user);
 		nftRepository.save(nft);
@@ -118,9 +116,10 @@ public class NftController {
 
 	@PostMapping(path = "sellNft")
 	public @ResponseBody
-	Nft sellNft(@RequestParam long id) {
-		Nft nft = nftRepository.findById(id);
-		nft.setOwner(null);
+	Nft sellNft(@RequestParam long nftId, @RequestParam long userId) {
+		User user = userRepository.findById(userId);
+		Nft nft = nftRepository.findById(nftId);
+		nft.setOwner(user);
 		nftRepository.save(nft);
 		return nft;
 	}
