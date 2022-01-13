@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("user")
 public class UserController {
 
 	private final UserRepository userRepository;
@@ -18,9 +19,9 @@ public class UserController {
 		this.nftRepository = nftRepository;
 	}
 
-	@PutMapping(path = "/addUser")
+	@PutMapping(path = "/add")
 	public @ResponseBody
-	String addUser(@RequestParam String pseudo, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
+	User add(@RequestParam String pseudo, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
 		User user = new User();
 		user.setPseudo(pseudo);
 		user.setFirstName(firstName);
@@ -28,24 +29,24 @@ public class UserController {
 		user.setEmail(email);
 		user.setPassword(password);
 		userRepository.save(user);
-		return "{\n\t\"message\" : \"User : [" + pseudo + "] created & saved.\"\n}";
+		return user;
 	}
 
-	@GetMapping(path = "/getUser")
+	@GetMapping(path = "/get")
 	public @ResponseBody
-	User getUser(@RequestParam long id) {
+	User get(@RequestParam long id) {
 		return userRepository.findById(id);
 	}
 
-	@GetMapping(path = "/getAllUsers")
+	@GetMapping(path = "/getAll")
 	public @ResponseBody
-	Iterable<User> getAllUsers() {
+	Iterable<User> getAll() {
 		return userRepository.findAll();
 	}
 
-	@DeleteMapping(path = "/deleteUser")
+	@DeleteMapping(path = "/delete")
 	public @ResponseBody
-	String deleteUser(@RequestParam long id) {
+	String delete(@RequestParam long id) {
 		User user = userRepository.findById(id);
 		for (Nft nft : nftRepository.findAll()) {
 			if (nft.getOwner() != null) {
@@ -56,21 +57,19 @@ public class UserController {
 			}
 		}
 		userRepository.delete(user);
-		return "{\n\t\"message\" : \"User : [" + user.getPseudo() + "] delete & saved.\"\n}";
+		return "{\n\t\"message\" : \"L'entrée dans la base de données a été supprimée.\"\n}";
 	}
 
-	@DeleteMapping(path = "/deleteAllUsers")
+	@DeleteMapping(path = "/deleteAll")
 	public @ResponseBody
-	String deleteAllUsers() {
-		for (User user : userRepository.findAll()) {
-			this.deleteUser(user.getId());
-		}
-		return "{\n\t\"message\" : \"All users have been deleted\"\n}";
+	String deleteAll() {
+		userRepository.deleteAll();
+		return "{\n\t\"message\" : \"Toutes les entrées dans la base de données ont été supprimées.\"\n}";
 	}
 
-	@PostMapping(path = "/updateUser")
+	@PostMapping(path = "/update")
 	public @ResponseBody
-	User updateUser(@RequestParam long id, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
+	User update(@RequestParam long id, @RequestParam String firstName, @RequestParam String lastName, @RequestParam String email, @RequestParam String password) {
 		User user = userRepository.findById(id);
 		user.setFirstName(firstName);
 		user.setLastName(lastName);
