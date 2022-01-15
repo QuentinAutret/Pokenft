@@ -10,11 +10,17 @@ public class Nft {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private long id;
+
 	private String name;
+
 	private String creator;
+
 	private String filepath;
+
 	private Double price;
+
 	private boolean forSale;
+
 	@OneToOne
 	@JoinColumn(name = "user_id", referencedColumnName = "id")
 	private User owner;

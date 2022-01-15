@@ -4,14 +4,14 @@ import com.pokenft.backend.entities.Nft;
 import com.pokenft.backend.entities.User;
 import com.pokenft.backend.repositories.NftRepository;
 import com.pokenft.backend.repositories.UserRepository;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Controller
-@RequestMapping("nft")
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
+@RequestMapping("/api/nft")
 public class NftController {
 
 	private final NftRepository nftRepository;

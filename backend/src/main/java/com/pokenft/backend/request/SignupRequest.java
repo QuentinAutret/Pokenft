@@ -1,49 +1,34 @@
-package com.pokenft.backend.entities;
+package com.pokenft.backend.request;
 
-import javax.persistence.*;
-import java.util.HashSet;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
-@Entity
-@Table(name = "user",
-		uniqueConstraints = {
-				@UniqueConstraint(columnNames = "username"),
-				@UniqueConstraint(columnNames = "email")
-		})
-public class User {
+public class SignupRequest {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
-	private long id;
-
+	@NotBlank
+	@Size(min = 3, max = 20)
 	private String username;
 
+	@NotBlank
+	@Size(min = 3, max = 20)
 	private String firstName;
 
+	@NotBlank
+	@Size(min = 3, max = 20)
 	private String lastName;
 
+	@NotBlank
+	@Size(max = 50)
+	@Email
 	private String email;
 
+	@NotBlank
+	@Size(min = 6, max = 40)
 	private String password;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "user_roles",
-			joinColumns = @JoinColumn(name = "user_id"),
-			inverseJoinColumns = @JoinColumn(name = "role_id"))
-	private Set<Role> roles = new HashSet<>();
-
-	public User() {
-
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
+	private Set<String> role;
 
 	public String getUsername() {
 		return username;
@@ -85,12 +70,12 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
-		return roles;
+	public Set<String> getRole() {
+		return this.role;
 	}
 
-	public void setRoles(Set<Role> roles) {
-		this.roles = roles;
+	public void setRole(Set<String> role) {
+		this.role = role;
 	}
 
 }

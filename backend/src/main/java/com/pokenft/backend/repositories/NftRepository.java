@@ -1,9 +1,11 @@
 package com.pokenft.backend.repositories;
 
 import com.pokenft.backend.entities.Nft;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface NftRepository extends CrudRepository<Nft, Long> {
+@Repository
+public interface NftRepository extends JpaRepository<Nft, Long> {
 
 	Nft findById(long id);
 
