@@ -2,7 +2,7 @@ package com.pokenft.backend.request;
 
 import javax.validation.constraints.NotBlank;
 
-public class LoginRequest {
+public class SigninRequest {
 
 	@NotBlank
 	private String username;

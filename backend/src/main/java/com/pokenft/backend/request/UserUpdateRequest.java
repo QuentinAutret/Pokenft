@@ -3,7 +3,7 @@ package com.pokenft.backend.request;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-public class SignupRequest {
+public class UserUpdateRequest {
 
 	@NotBlank
 	private String username;

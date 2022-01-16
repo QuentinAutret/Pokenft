@@ -2,8 +2,9 @@ package com.pokenft.backend.request;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
-public class SignupRequest {
+public class UserAddRequest {
 
 	@NotBlank
 	private String username;
@@ -20,6 +21,8 @@ public class SignupRequest {
 
 	@NotBlank
 	private String password;
+
+	private Set<String> role;
 
 	public String getUsername() {
 		return username;
@@ -59,6 +62,14 @@ public class SignupRequest {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public Set<String> getRole() {
+		return this.role;
+	}
+
+	public void setRole(Set<String> role) {
+		this.role = role;
 	}
 
 }

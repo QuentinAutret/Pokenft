@@ -4,11 +4,14 @@ import com.pokenft.backend.entities.Nft;
 import com.pokenft.backend.entities.User;
 import com.pokenft.backend.repositories.NftRepository;
 import com.pokenft.backend.repositories.UserRepository;
+import com.pokenft.backend.request.NftAddRequest;
+import com.pokenft.backend.request.NftUpdateRequest;
 import com.pokenft.backend.response.MessageResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +21,7 @@ import java.util.List;
 public class NftController {
 
 	private final NftRepository nftRepository;
+
 	private final UserRepository userRepository;
 
 	public NftController(NftRepository nftRepository, UserRepository userRepository) {
@@ -27,19 +31,24 @@ public class NftController {
 
 	@PutMapping("/add")
 	@PreAuthorize("hasRole('ADMIN')")
-	public @ResponseBody
-	Nft add(@RequestBody String name,
-	        @RequestBody String creator,
-	        @RequestBody String filePath,
-	        @RequestBody Double price) {
-		Nft nft = new Nft(name, creator, filePath, price, true, null);
+	public ResponseEntity<?> add(@Valid @RequestBody NftAddRequest nftAddRequest) {
+		if (nftRepository.existsByName(nftAddRequest.getName())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Erreur: Nom de NFT déjà pris !"));
+		}
+		Nft nft = new Nft();
+		nft.setName(nftAddRequest.getName());
+		nft.setCreator(nftAddRequest.getCreator());
+		nft.setFilepath(nftAddRequest.getFilepath());
+		nft.setPrice(nftAddRequest.getPrice());
+		nft.setForSale(true);
+		nft.setOwner(null);
 		nftRepository.save(nft);
-		return nft;
+		return ResponseEntity.ok(new MessageResponse("Nft enregistré avec succès !"));
 	}
 
 	@GetMapping("/get")
 	public @ResponseBody
-	Nft get(@RequestBody long id) {
+	Nft get(@RequestParam long id) {
 		return nftRepository.findById(id);
 	}
 
@@ -64,7 +73,9 @@ public class NftController {
 	Iterable<Nft> getAllOfUser(@RequestParam long id) {
 		List<Nft> nftList = new ArrayList<>();
 		for (Nft nft : nftRepository.findAll()) {
-			if (nft.getOwner().getId() == id) nftList.add(nft);
+			if (nft.getOwner() != null) {
+				if (nft.getOwner().getId() == id) nftList.add(nft);
+			}
 		}
 		return nftList;
 	}
@@ -72,7 +83,7 @@ public class NftController {
 	@DeleteMapping("/delete")
 	@PreAuthorize("hasRole('ADMIN')")
 	public @ResponseBody
-	ResponseEntity<?> delete(@RequestBody long id) {
+	ResponseEntity<?> delete(@RequestParam long id) {
 		Nft nft = nftRepository.findById(id);
 		nftRepository.deleteById(id);
 		return ResponseEntity.ok(new MessageResponse("Nft supprimé avec succès !"));
@@ -88,28 +99,25 @@ public class NftController {
 
 	@PostMapping("/update")
 	@PreAuthorize("hasRole('ADMIN')")
-	public @ResponseBody
-	Nft update(@RequestBody long id,
-	           @RequestBody String name,
-	           @RequestBody String creator,
-	           @RequestBody String filePath,
-	           @RequestBody Double price,
-	           @RequestBody boolean forSale) {
-		Nft nft = nftRepository.findById(id);
-		nft.setName(name);
-		nft.setCreator(creator);
-		nft.setFilepath(filePath);
-		nft.setPrice(price);
-		nft.setForSale(forSale);
+	public ResponseEntity<?> update(@Valid @RequestBody NftUpdateRequest nftUpdateRequest) {
+		Nft nft = nftRepository.findById(nftUpdateRequest.getId());
+		if (nftRepository.existsByName(nftUpdateRequest.getName())) {
+			return ResponseEntity.badRequest().body(new MessageResponse("Erreur: Nom de NFT déjà pris !"));
+		}
+		nft.setName(nftUpdateRequest.getName());
+		nft.setCreator(nftUpdateRequest.getCreator());
+		nft.setFilepath(nftUpdateRequest.getFilepath());
+		nft.setPrice(nftUpdateRequest.getPrice());
+		nft.setForSale(nftUpdateRequest.isForSale());
 		nftRepository.save(nft);
-		return nft;
+		return ResponseEntity.ok(new MessageResponse("Nft modifié avec succès !"));
 	}
 
 	@PostMapping("sell")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
-	Nft sell(@RequestBody long id,
-	         @RequestBody Double price) {
+	Nft sell(@RequestParam long id,
+	         @RequestParam Double price) {
 		Nft nft = nftRepository.findById(id);
 		nft.setPrice(price);
 		nft.setForSale(true);
@@ -120,9 +128,9 @@ public class NftController {
 	@PostMapping("/buy")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
-	Nft buy(@RequestBody long nftId,
-	        @RequestBody long userId) {
-		Nft nft = nftRepository.findById(nftId);
+	Nft buy(@RequestParam long id,
+	        @RequestParam long userId) {
+		Nft nft = nftRepository.findById(id);
 		User user = userRepository.findById(userId);
 		nft.setForSale(false);
 		nft.setOwner(user);

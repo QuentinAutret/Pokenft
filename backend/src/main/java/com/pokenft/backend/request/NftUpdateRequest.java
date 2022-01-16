@@ -1,33 +1,26 @@
-package com.pokenft.backend.entities;
+package com.pokenft.backend.request;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "nft")
-public class Nft {
+public class NftUpdateRequest {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@NotBlank
 	private long id;
 
+	@NotBlank
 	private String name;
 
+	@NotBlank
 	private String creator;
 
+	@NotBlank
 	private String filepath;
 
+	@NotBlank
 	private Double price;
 
+	@NotBlank
 	private boolean forSale;
-
-	@OneToOne
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
-	private User owner;
-
-	public Nft() {
-
-	}
 
 	public long getId() {
 		return id;
@@ -75,14 +68,6 @@ public class Nft {
 
 	public void setForSale(boolean forSale) {
 		this.forSale = forSale;
-	}
-
-	public User getOwner() {
-		return owner;
-	}
-
-	public void setOwner(User owner) {
-		this.owner = owner;
 	}
 
 }
