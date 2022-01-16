@@ -31,8 +31,8 @@ public class NftController {
 	Nft add(@RequestBody String name,
 	        @RequestBody String creator,
 	        @RequestBody String filePath,
-	        @RequestBody Double price) {
-		Nft nft = new Nft(name, creator, filePath, price, true, null);
+	        @RequestBody String price) {
+		Nft nft = new Nft(name, creator, filePath, Double.valueOf(price), true, null);
 		nftRepository.save(nft);
 		return nft;
 	}
