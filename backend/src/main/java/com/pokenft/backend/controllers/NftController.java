@@ -37,19 +37,19 @@ public class NftController {
 		return nft;
 	}
 
-	@GetMapping(path = "/get")
+	@GetMapping("/get")
 	public @ResponseBody
 	Nft get(@RequestBody long id) {
 		return nftRepository.findById(id);
 	}
 
-	@GetMapping(path = "/getAll")
+	@GetMapping("/getAll")
 	public @ResponseBody
 	Iterable<Nft> getAll() {
 		return nftRepository.findAll();
 	}
 
-	@GetMapping(path = "/getAllOnSale")
+	@GetMapping("/getAllOnSale")
 	public @ResponseBody
 	Iterable<Nft> getAllOnSale() {
 		List<Nft> nftList = new ArrayList<>();
@@ -59,7 +59,7 @@ public class NftController {
 		return nftList;
 	}
 
-	@GetMapping(path = "getAllOfUser")
+	@GetMapping("getAllOfUser")
 	public @ResponseBody
 	Iterable<Nft> getAllOfUser(@RequestParam long id) {
 		List<Nft> nftList = new ArrayList<>();
@@ -69,7 +69,7 @@ public class NftController {
 		return nftList;
 	}
 
-	@DeleteMapping(path = "/delete")
+	@DeleteMapping("/delete")
 	@PreAuthorize("hasRole('ADMIN')")
 	public @ResponseBody
 	ResponseEntity<?> delete(@RequestBody long id) {
@@ -78,7 +78,7 @@ public class NftController {
 		return ResponseEntity.ok(new MessageResponse("Nft supprimé avec succès !"));
 	}
 
-	@DeleteMapping(path = "/deleteAll")
+	@DeleteMapping("/deleteAll")
 	@PreAuthorize("hasRole('ADMIN')")
 	public @ResponseBody
 	ResponseEntity<?> deleteAll() {
@@ -86,7 +86,7 @@ public class NftController {
 		return ResponseEntity.ok(new MessageResponse("Nfts supprimés avec succès !"));
 	}
 
-	@PostMapping(path = "/update")
+	@PostMapping("/update")
 	@PreAuthorize("hasRole('ADMIN')")
 	public @ResponseBody
 	Nft update(@RequestBody long id,
@@ -105,7 +105,7 @@ public class NftController {
 		return nft;
 	}
 
-	@PostMapping(path = "sell")
+	@PostMapping("sell")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
 	Nft sell(@RequestBody long id,
@@ -117,7 +117,7 @@ public class NftController {
 		return nft;
 	}
 
-	@PostMapping(path = "/buy")
+	@PostMapping("/buy")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
 	Nft buy(@RequestBody long nftId,
