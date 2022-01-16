@@ -29,6 +29,15 @@ public class Nft {
 
 	}
 
+	public Nft(String name, String creator, String filePath, Double price, boolean forSale, User owner) {
+		this.name = name;
+		this.creator = creator;
+		this.filepath = filePath;
+		this.price = price;
+		this.forSale = forSale;
+		this.owner = owner;
+	}
+
 	public long getId() {
 		return id;
 	}

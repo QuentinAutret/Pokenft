@@ -69,12 +69,12 @@ public class AuthController {
 		if (userRepository.existsByUsername(signUpRequest.getUsername())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Username is already taken!"));
+					.body(new MessageResponse("Error: Username déjà pris !"));
 		}
 		if (userRepository.existsByEmail(signUpRequest.getEmail())) {
 			return ResponseEntity
 					.badRequest()
-					.body(new MessageResponse("Error: Email is already in use!"));
+					.body(new MessageResponse("Error: Email déjà utilisée !"));
 		}
 		User user = new User();
 		user.setUsername(signUpRequest.getUsername());
@@ -86,18 +86,18 @@ public class AuthController {
 		Set<Role> roles = new HashSet<>();
 		if (strRoles == null) {
 			Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-					.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+					.orElseThrow(() -> new RuntimeException("Error: Role non trouvé."));
 			roles.add(userRole);
 		} else {
 			strRoles.forEach(role -> {
 				Role newRole = roleRepository.findByName(ERole.valueOf(role))
-						.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						.orElseThrow(() -> new RuntimeException("Error: Role non trouvé."));
 				roles.add(newRole);
 			});
 		}
 		user.setRoles(roles);
 		userRepository.save(user);
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(new MessageResponse("Utilisateur enregistré avec succès !"));
 	}
 
 }
