@@ -5,18 +5,9 @@ import lombok.Data;
 import javax.validation.constraints.NotBlank;
 
 @Data
-public class NftAddRequest {
+public class RoleAddRequest {
 
 	@NotBlank
 	private String name;
-
-	@NotBlank
-	private String creator;
-
-	@NotBlank
-	private String filepath;
-
-	@NotBlank
-	private Double price;
 
 }
