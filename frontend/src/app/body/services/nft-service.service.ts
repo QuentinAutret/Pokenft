@@ -18,7 +18,7 @@ export class NftServiceService {
   }
 
   public getAllNft(): Promise<Nft[]> {
-    return this.http.get<Nft[]>('http://localhost:8080/api/nft/getAll').toPromise();
+    return this.http.get<Nft[]>(this.nftsUrl + '/getAll').toPromise();
   }
 
   public getAllUser(): Observable<User[]> {

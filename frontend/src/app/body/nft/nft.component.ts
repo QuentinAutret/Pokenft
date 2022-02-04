@@ -13,7 +13,7 @@ export class NftComponent implements OnInit {
   id: string = "";
   name: string = "";
   creator: string = "";
-  filepath: string = "";
+  filepath: string = "../assets/images/nft/";
   price: number = 0;
   forSale: boolean = true;
   owner!: User;
@@ -25,10 +25,9 @@ export class NftComponent implements OnInit {
   }
 
   setNft(): void {
-    console.log(this.nft);
     this.name = this.nft.name;
     this.creator = this.nft.creator;
-    this.filepath = this.nft.filepath;
+    this.filepath += this.nft.filepath;
     this.price = this.nft.price;
     this.forSale = this.nft.forSale
     this.owner = this.nft.owner;
