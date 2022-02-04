@@ -1,12 +1,12 @@
 <mat-card class="example-card">
     <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
-        <mat-card-title>{{ this.nft.name }}</mat-card-title>
-        <mat-card-subtitle>{{ this.nft.owner?.username }}</mat-card-subtitle>
+        <mat-card-title>{{ this.name }}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{ this.nft.filepath }}">
+    <img mat-card-image src="{{ this.filepath }}">
     <mat-card-content>
-        {{ this.nft.price }} €
+        <mat-card-subtitle>Créateur : {{ this.creator }}</mat-card-subtitle>
+        {{ this.price }} €
     </mat-card-content>
     <mat-card-actions>
         <button mat-button>ACHETER</button>
