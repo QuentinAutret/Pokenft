@@ -106,7 +106,9 @@ public class UserController {
 	@PreAuthorize("hasRole('ADMIN')")
 	public @ResponseBody
 	ResponseEntity<?> deleteAll() {
-		userRepository.deleteAll();
+		for (User user : userRepository.findAll()) {
+			delete(user.getId());
+		}
 		return ResponseEntity.ok(new MessageResponse("Utilisateurs supprimés avec succès !"));
 	}
 
