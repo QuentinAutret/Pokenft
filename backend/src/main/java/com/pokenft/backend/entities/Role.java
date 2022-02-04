@@ -1,19 +1,9 @@
 package com.pokenft.backend.entities;
 
 import com.pokenft.backend.model.ERole;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import java.util.Objects;
 
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
 @Entity
 @Table(name = "role")
 public class Role {
@@ -27,17 +17,24 @@ public class Role {
 	@Column(length = 20)
 	private ERole name;
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-		Role role = (Role) o;
-		return Objects.equals(id, role.id);
+	public Role() {
+
 	}
 
-	@Override
-	public int hashCode() {
-		return getClass().hashCode();
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public ERole getName() {
+		return name;
+	}
+
+	public void setName(ERole name) {
+		this.name = name;
 	}
 
 }
