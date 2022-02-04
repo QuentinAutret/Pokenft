@@ -1,23 +1,23 @@
 <!-- As a heading -->
-<nav class="navbar navbar-light bg-light">
-    <div class="container-fluid">
-        <span class="navbar-brand mb-0 h1">Navbar</span>
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>more_vert</mat-icon>
+<mat-toolbar class="container">
+    <h1>Pokénft</h1>
+    <span class="example-spacer"></span>
+    <div class="container">
+        <button style="margin-right: 2px;" mat-icon-button>
+            <mat-icon>home</mat-icon>
         </button>
-        <mat-menu #menu="matMenu">
+        <mat-icon-button style="margin-top: 7px;" [matMenuTriggerFor]="compte" class="container">
+            <mat-icon>more_vert</mat-icon>
+        </mat-icon-button>
+        <mat-menu #compte="matMenu">
             <button mat-menu-item>
-                <mat-icon>dialpad</mat-icon>
-                <span>Redial</span>
-            </button>
-            <button mat-menu-item disabled>
-                <mat-icon>voicemail</mat-icon>
-                <span>Check voice mail</span>
+                <mat-icon>account_circle</mat-icon>
+                <span>Compte</span>
             </button>
             <button mat-menu-item>
-                <mat-icon>notifications_off</mat-icon>
-                <span>Disable alerts</span>
+                <mat-icon>logout</mat-icon>
+                <span>Déconnexion</span>
             </button>
         </mat-menu>
     </div>
-</nav>
+</mat-toolbar>
