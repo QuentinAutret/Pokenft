@@ -1,7 +1,13 @@
 .example-card {
-  max-width: 400px;
+  max-height: 500px;
 }
 
 .example-header-image {
   background-size: cover;
+}
+
+.carte {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }

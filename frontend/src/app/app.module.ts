@@ -20,6 +20,7 @@ import { MatCardModule } from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { LoginComponent } from './login/login.component';
 
 
 @NgModule({
@@ -30,7 +31,8 @@ import {MatGridListModule} from '@angular/material/grid-list';
     BodyComponent,
     GalleryComponent,
     AccountComponent,
-    NftComponent
+    NftComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
