@@ -13,7 +13,7 @@ export class NftServiceService {
   private nftsUrl: string;
 
   constructor(private http: HttpClient) {
-    this.usersUrl = 'http://localhost:8080/user';
+    this.usersUrl = 'http://localhost:8080/api/user';
     this.nftsUrl = 'http://localhost:8080/api/nft'
   }
 
