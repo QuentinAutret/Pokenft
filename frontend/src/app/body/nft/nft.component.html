@@ -3,7 +3,7 @@
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{ this.name }}</mat-card-title>
     </mat-card-header>
-    <img mat-card-image src="{{ this.filepath }}">
+    <img style="max-height: 150px; max-width: 400px;" mat-card-image src="{{ this.filepath }}">
     <mat-card-content>
         <mat-card-subtitle>Créateur : {{ this.creator }}</mat-card-subtitle>
         {{ this.price }} €
