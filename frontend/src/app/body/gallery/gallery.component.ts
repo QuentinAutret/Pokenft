@@ -13,7 +13,6 @@ export class GalleryComponent implements OnInit {
 
   ngOnInit(): void {
     this.nftService.getAllNft().then(result => {
-      console.info("result ", result);
       this.tabNFT = result;
     }).catch(error => {
       console.error("error ", error);

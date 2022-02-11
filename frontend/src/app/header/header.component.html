@@ -10,17 +10,17 @@
             <mat-icon>more_vert</mat-icon>
         </mat-icon-button>
         <mat-menu #compte="matMenu">
-            <button mat-menu-item>
+            <button *ngIf="isLoggedIn" mat-menu-item>
                 <a routerLink="account" routerLinkActive="active">
                     <mat-icon>account_circle</mat-icon>
                     <span>Compte</span>
                 </a>
             </button>
-            <button routerLink="login" mat-menu-item>
+            <button *ngIf="!isLoggedIn" routerLink="login" mat-menu-item>
                 <mat-icon>login</mat-icon>
                 <span>Connexion</span>
             </button>
-            <button mat-menu-item>
+            <button *ngIf="isLoggedIn" (click)="logout()" mat-menu-item>
                 <mat-icon>logout</mat-icon>
                 <span>Déconnexion</span>
             </button>
