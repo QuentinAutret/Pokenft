@@ -4,14 +4,14 @@
         <form name="form"
             #f="ngForm"
             novalidate
-            (ngSubmit)="f.form.valid && onSubmit()"
-            fxLayoutAlign="strech" fxLayout="column" class="login-form">
+            (ngSubmit)="onSubmit()"
+            fxLayoutAlign="strech" fxLayout="column" class="login-form" [formGroup]="formGroup">
             <mat-form-field>
-                <input matInput name="username" [(ngModel)]="form.username" #username="ngModel" placeholder="Pseudo" required>
+                <input matInput name="username" placeholder="Pseudo" formControlName="username">
             </mat-form-field>
 
             <mat-form-field>
-                <input matInput name="password" [(ngModel)]="form.password" #password="ngModel" placeholder="Mot de passe" required type="password">
+                <input matInput name="password" placeholder="Mot de passe" type="password" formControlName="password">
             </mat-form-field>
             <button mat-raised-button type="submit" class="mt-5" color="primary">Connexion</button>
         </form>

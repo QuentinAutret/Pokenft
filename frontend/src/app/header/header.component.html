@@ -10,11 +10,9 @@
             <mat-icon>more_vert</mat-icon>
         </mat-icon-button>
         <mat-menu #compte="matMenu">
-            <button *ngIf="isLoggedIn" mat-menu-item>
-                <a routerLink="account" routerLinkActive="active">
-                    <mat-icon>account_circle</mat-icon>
-                    <span>Compte</span>
-                </a>
+            <button *ngIf="isLoggedIn" mat-menu-item routerLink="account" routerLinkActive="active">
+                <mat-icon>account_circle</mat-icon>
+                <span>Compte</span>
             </button>
             <button *ngIf="!isLoggedIn" routerLink="login" mat-menu-item>
                 <mat-icon>login</mat-icon>
