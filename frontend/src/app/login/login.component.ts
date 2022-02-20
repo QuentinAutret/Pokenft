@@ -32,28 +32,26 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    if (this.tokenService.getToken() != null) {
-      this.isLoggedIn = true;
-      this.roles = this.tokenService.getUser().roles;
-    }
   }
 
   onSubmit(): void {
     if (this.formGroup.valid) {
-      this.loginService.login(this.formGroup.value).subscribe(
-        data => {
-          this.tokenService.saveToken(data.accessToken);
-          this.tokenService.saveUser(data);
-          this.isLoggedIn = true;
-          this.roles = this.tokenService.getUser().roles;
-        },
-        err => {
-          this.errorMessage = err.error.message;
-          this.isLoggedIn = false;
+      this.loginService.login(this.formGroup.value).subscribe({
+          next: (data) => {
+            this.tokenService.saveToken(data.accessToken);
+            this.tokenService.saveUser(data);
+            this.loginService.connectez.next(true);
+            this.roles = this.tokenService.getUser().roles;
+            this.router.navigate(['home'])
+          },
+          error: (err) => {
+            this.errorMessage = err.error.message;
+            this.loginService.connectez.next(false);
+          }
         }
       );
     }
   }
-
+  
 }
   

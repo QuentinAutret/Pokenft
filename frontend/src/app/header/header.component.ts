@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { LoginService } from '../login/service/login.service';
 
 @Component({
@@ -9,13 +8,15 @@ import { LoginService } from '../login/service/login.service';
 })
 export class HeaderComponent implements OnInit {
 
+  isLoggedIn!: boolean;
+
   constructor(private loginService: LoginService) {}
 
-  get isLoggedIn(): boolean {
-    return this.loginService.isLoggedIn();
-  }
-
   ngOnInit(): void {
+    this.loginService.connectez.subscribe((data) => 
+      this.isLoggedIn = data
+    );
+    this.loginService.isLoggedIn();
   }
 
   logout(): void {

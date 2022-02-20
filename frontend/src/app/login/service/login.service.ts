@@ -1,20 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { User } from 'src/app/body/model/user.model';
 import * as moment from "moment";
 import { Observable } from 'rxjs/internal/Observable';
+import { BehaviorSubject, Subject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LoginService {
+export class LoginService implements OnInit {
   
+  connectez: Subject<boolean> = new Subject();
   loginUrl: string;
-  public isLogIn: boolean = false;
   result: any;
   errorMessage = '';
 
   constructor(private http: HttpClient) {
-    this.loginUrl = 'http://localhost:8080/api/auth'
+    this.loginUrl = 'http://localhost:8080/api/auth';
+  }
+
+  ngOnInit(): void {
+    this.isLoggedIn();
   }
   
   login(data: any): Observable<any> {
@@ -27,25 +32,19 @@ export class LoginService {
       email,
       password
     });
+  }        
+  
+  public logout(): void {
+    this.connectez.next(false);
+    sessionStorage.removeItem("accessToken");
   }
   
-  private setSession(authResult: { expiresIn: moment.DurationInputArg1; idToken: string; }) {
-    const expiresAt = moment().add(authResult.expiresIn,'second');
-    
-    localStorage.setItem('accessToken', authResult.idToken);
-  }          
-  
-  public logout() {
-    this.isLogIn = false;
-    localStorage.removeItem("accessToken");
-  }
-  
-  public isLoggedIn() {
-    return localStorage.getItem('accessToken') != null;
-  }
-  
-  isLoggedOut() {
-    return !this.isLoggedIn();
+  public isLoggedIn(): void {
+    if (sessionStorage.getItem('accessToken') != null) {
+      this.connectez.next(true);
+    } else {
+      this.connectez.next(false);      
+    }
   }
   
 }
