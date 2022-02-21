@@ -4,6 +4,7 @@ import { User } from 'src/app/body/model/user.model';
 import * as moment from "moment";
 import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +15,10 @@ export class LoginService implements OnInit {
   result: any;
   errorMessage = '';
 
-  constructor(private http: HttpClient) {
+  constructor(
+    private http: HttpClient,
+    private router: Router
+  ) {
     this.loginUrl = 'http://localhost:8080/api/auth';
   }
 
@@ -37,6 +41,7 @@ export class LoginService implements OnInit {
   public logout(): void {
     this.connectez.next(false);
     sessionStorage.removeItem("accessToken");
+    this.router.navigate(['home']);
   }
   
   public isLoggedIn(): void {

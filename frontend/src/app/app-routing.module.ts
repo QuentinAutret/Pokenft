@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountComponent } from './account/account.component';
+import { AccountComponent } from './body/account/account.component';
 import { BodyComponent } from './body/body.component';
 import { LoginComponent } from './login/login.component';
 import { PageNonTrouveeComponent } from './page-non-trouvee/page-non-trouvee.component';

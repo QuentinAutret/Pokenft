@@ -8,10 +8,10 @@ import { FooterComponent } from './footer/footer.component';
 import { BodyComponent } from './body/body.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GalleryComponent } from './body/gallery/gallery.component';
-import { AccountComponent } from './account/account.component';
 import { NftComponent } from './body/nft/nft.component';
 import { LoginComponent } from './login/login.component';
 import { PageNonTrouveeComponent } from './page-non-trouvee/page-non-trouvee.component';
+import { AccountComponent } from './body/account/account.component';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
