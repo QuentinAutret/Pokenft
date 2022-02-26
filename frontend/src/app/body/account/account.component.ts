@@ -14,6 +14,14 @@ export class AccountComponent implements OnInit {
   constructor(private accountService: AccountService) { }
   
   ngOnInit(): void {
+    this.user.id = this.accountService.getAccount().id;
+    this.user.username = this.accountService.getAccount().username;
+    this.user.email = this.accountService.getAccount().email;
+    this.user.roles = this.accountService.getAccount().roles;
+    console.log(this.user.id);
+    console.log(this.user.username);
+    console.log(this.user.email);
+    console.log(this.user.roles);
   }
 
   

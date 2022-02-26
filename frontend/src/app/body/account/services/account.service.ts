@@ -1,12 +1,11 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Role } from '../../model/role.model';
+import { Injectable, OnInit } from '@angular/core';
 import { User } from '../../model/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService {
+export class AccountService implements OnInit {
 
   private usersUrl: string;
   public user!: string;
@@ -15,17 +14,32 @@ export class AccountService {
     this.usersUrl = 'http://localhost:8080/api/user';
   }
 
+  ngOnInit(): void {
+    // this.initUser();
+  }
+
+  // private initUser(): void {
+  //   this.user.id = 0;
+  //   this.user.username = '';
+  //   this.user.firstName = '';
+  //   this.user.lastName = '';
+  //   this.user.email = '';
+  //   this.user.password = '';
+  // }
+
   public getAccountById(id: number): Promise<User[]> {
     return this.http.get<User[]>(this.usersUrl + '/get/' + id).toPromise();
   }
 
   public setAccountSession(user: any): void {
-    this.user = JSON.parse(user);
-    console.log(this.user);
+    this.user = JSON.stringify(user);
   }
 
-  // public getAccount(): User {
-  //   return this.user;
-  // }
+  public getAccount(): any {
+    if (this.user) {
+      return JSON.parse(this.user);
+    }
+    return {};
+  }
   
 }

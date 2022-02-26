@@ -52,6 +52,7 @@ export class LoginComponent implements OnInit {
         error: (err) => {
           this.errorMessage = err.error.message;
           this.loginService.connectez.next(false);
+          this.router.navigate(['login']);
         }
       });
     }
