@@ -5,7 +5,7 @@ import { User } from '../../model/user.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AccountService implements OnInit {
+export class AccountService {
 
   private usersUrl: string;
   private id!: number;
@@ -14,11 +14,8 @@ export class AccountService implements OnInit {
     this.usersUrl = 'http://localhost:8080/api/user';
   }
 
-  ngOnInit(): void {
-  }
-
   public getAccountById(id: number): Promise<User> {
-    return this.http.get<User>(this.usersUrl + '/get/' + id).toPromise();
+    return this.http.get<User>(this.usersUrl + '/get?id=' + id).toPromise();
   }
 
   public getId(): number {
