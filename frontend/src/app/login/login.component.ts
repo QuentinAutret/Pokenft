@@ -41,12 +41,10 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.formGroup.value).subscribe({
         next: (data) => {
           this.tokenService.saveToken(data.accessToken);
-          console.log(data);
-          console.log(data.username);
           this.tokenService.saveUser(data);
           this.loginService.connectez.next(true);
           this.roles = this.tokenService.getUser().roles;
-          this.accountService.setAccountSession(data);
+          this.accountService.setId(data.id);
           this.router.navigate(['home']);
           },
         error: (err) => {
