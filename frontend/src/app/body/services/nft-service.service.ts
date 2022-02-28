@@ -25,5 +25,7 @@ export class NftServiceService {
     return this.http.get<User[]>(this.usersUrl + '/getAll');
   }
 
-
+  public buyNft(idNft: string, idUser: number): Promise<Nft> {
+    return this.http.post<Nft>(this.nftsUrl + '/buy', {idNft, idUser}).toPromise();
+  }
 }

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AccountService } from '../account/services/account.service';
 import { Nft } from '../model/nft.model';
 import { User } from '../model/user.model';
+import { NftServiceService } from '../services/nft-service.service';
 
 @Component({
   selector: 'app-nft',
@@ -18,19 +20,29 @@ export class NftComponent implements OnInit {
   forSale: boolean = true;
   owner!: User;
 
-  constructor() { }
+  constructor(private nftService: NftServiceService,
+    private accountService: AccountService) { }
 
   ngOnInit(): void {
     this.setNft()
   }
 
   setNft(): void {
+    this.id = this.nft.id;
     this.name = this.nft.name;
     this.creator = this.nft.creator;
     this.filepath += this.nft.filepath;
     this.price = this.nft.price;
     this.forSale = this.nft.forSale
     this.owner = this.nft.owner;
+  }
+
+  buyNft(): void {
+    this.nftService.buyNft(this.id, this.accountService.getId()).then(result => {
+      console.log(result);
+    }).catch(error => {
+      console.error("error ", error);
+    })
   }
 
 }
