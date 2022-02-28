@@ -1,19 +1,23 @@
 package com.pokenft.backend.request;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 public class NftAddRequest {
 
+	@NotNull
 	@NotBlank
 	private String name;
 
+	@NotNull
 	@NotBlank
 	private String creator;
 
+	@NotNull
 	@NotBlank
 	private String filepath;
 
-	@NotBlank
+	@NotNull
 	private Double price;
 
 	public String getName() {

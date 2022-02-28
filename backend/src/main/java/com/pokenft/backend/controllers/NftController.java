@@ -5,6 +5,8 @@ import com.pokenft.backend.entities.User;
 import com.pokenft.backend.repositories.NftRepository;
 import com.pokenft.backend.repositories.UserRepository;
 import com.pokenft.backend.request.NftAddRequest;
+import com.pokenft.backend.request.NftBuyRequest;
+import com.pokenft.backend.request.NftSellRequest;
 import com.pokenft.backend.request.NftUpdateRequest;
 import com.pokenft.backend.response.MessageResponse;
 import org.springframework.http.ResponseEntity;
@@ -116,10 +118,9 @@ public class NftController {
 	@PostMapping("sell")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
-	Nft sell(@RequestParam long id,
-	         @RequestParam Double price) {
-		Nft nft = nftRepository.findById(id);
-		nft.setPrice(price);
+	Nft sell(@Valid @RequestBody NftSellRequest nftSellRequest) {
+		Nft nft = nftRepository.findById(nftSellRequest.getId());
+		nft.setPrice(nftSellRequest.getPrice());
 		nft.setForSale(true);
 		nftRepository.save(nft);
 		return nft;
@@ -128,10 +129,9 @@ public class NftController {
 	@PostMapping("/buy")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
-	Nft buy(@RequestParam long id,
-	        @RequestParam long userId) {
-		Nft nft = nftRepository.findById(id);
-		User user = userRepository.findById(userId);
+	Nft buy(@Valid @RequestBody NftBuyRequest nftBuyRequest) {
+		Nft nft = nftRepository.findById(nftBuyRequest.getId());
+		User user = userRepository.findById(nftBuyRequest.getUserId());
 		nft.setForSale(false);
 		nft.setOwner(user);
 		nftRepository.save(nft);
