@@ -21,12 +21,6 @@ export class NftServiceService {
   }
 
   public buyNft(id: string, userId: number): Promise<any> {
-    const httpOptions = new HttpHeaders({
-      Authorization: `Bearer ${this.tokenService.getToken()}`,
-      responseType: `json`
-    });
-    const options = new HttpHeaders().set('Authorization', `Bearer ${this.tokenService.getToken()}`);
-
     const headerDict = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.tokenService.getToken()}`

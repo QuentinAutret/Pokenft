@@ -22,8 +22,7 @@ export class NftComponent implements OnInit {
   owner!: User;
 
   constructor(private nftService: NftServiceService,
-    private accountService: AccountService,
-    private tokenService: TokenService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +42,7 @@ export class NftComponent implements OnInit {
   buyNft(): void {
     this.nftService.buyNft(this.id, this.accountService.getId()).then(result => {
       console.log(result);
+      this.owner = result.owner;
     }).catch(error => {
       console.error("error ", error);
     })
