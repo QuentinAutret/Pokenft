@@ -4,10 +4,7 @@ import com.pokenft.backend.entities.Nft;
 import com.pokenft.backend.entities.User;
 import com.pokenft.backend.repositories.NftRepository;
 import com.pokenft.backend.repositories.UserRepository;
-import com.pokenft.backend.request.NftAddRequest;
-import com.pokenft.backend.request.NftBuyRequest;
-import com.pokenft.backend.request.NftSellRequest;
-import com.pokenft.backend.request.NftUpdateRequest;
+import com.pokenft.backend.request.*;
 import com.pokenft.backend.response.MessageResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -136,6 +133,20 @@ public class NftController {
 		nft.setOwner(user);
 		nftRepository.save(nft);
 		return nft;
+	}
+
+	@PostMapping("/buyAll")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	public @ResponseBody
+	ResponseEntity<?> buyAll(@Valid @RequestBody NftBuyAllRequest nftBuyAllRequest) {
+		User user = userRepository.findById(nftBuyAllRequest.getUserId());
+		for (long id : nftBuyAllRequest.getNftsId()) {
+			Nft nft = nftRepository.findById(id);
+			nft.setForSale(false);
+			nft.setOwner(user);
+			nftRepository.save(nft);
+		}
+		return ResponseEntity.ok(new MessageResponse("Nfts achetés avec succès !"));
 	}
 
 }
