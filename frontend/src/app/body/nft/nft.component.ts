@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { TokenService } from 'src/app/login/service/token.service';
 import { AccountService } from '../account/services/account.service';
 import { Nft } from '../model/nft.model';
 import { User } from '../model/user.model';
@@ -21,7 +22,9 @@ export class NftComponent implements OnInit {
   owner!: User;
 
   constructor(private nftService: NftServiceService,
-    private accountService: AccountService) { }
+    private accountService: AccountService,
+    private tokenService: TokenService,
+  ) { }
 
   ngOnInit(): void {
     this.setNft()

@@ -1,31 +1,41 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs';
+import { TokenService } from 'src/app/login/service/token.service';
 import { Nft } from '../model/nft.model';
-import { User } from '../model/user.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NftServiceService {
 
-  private usersUrl: string;
   private nftsUrl: string;
 
-  constructor(private http: HttpClient) {
-    this.usersUrl = 'http://localhost:8080/api/user';
+  constructor(private http: HttpClient,
+    private tokenService: TokenService) {
     this.nftsUrl = 'http://localhost:8080/api/nft'
   }
 
   public getAllNft(): Promise<Nft[]> {
-    return this.http.get<Nft[]>(this.nftsUrl + '/getAll').toPromise();
+    return this.http.get<Nft[]>(this.nftsUrl + '/getAllOnSale').toPromise();
   }
 
-  public getAllUser(): Observable<User[]> {
-    return this.http.get<User[]>(this.usersUrl + '/getAll');
-  }
+  public buyNft(id: string, userId: number): Promise<any> {
+    const httpOptions = new HttpHeaders({
+      Authorization: `Bearer ${this.tokenService.getToken()}`,
+      responseType: `json`
+    });
+    const options = new HttpHeaders().set('Authorization', `Bearer ${this.tokenService.getToken()}`);
 
-  public buyNft(idNft: string, idUser: number): Promise<Nft> {
-    return this.http.post<Nft>(this.nftsUrl + '/buy', {idNft, idUser}).toPromise();
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.tokenService.getToken()}`
+    }
+
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict), 
+    };
+    const body = {id, userId};
+    return this.http.post(this.nftsUrl + '/buy', body, requestOptions).toPromise();
   }
 }
