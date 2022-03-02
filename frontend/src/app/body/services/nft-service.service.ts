@@ -37,4 +37,8 @@ export class NftServiceService {
     return this.http.get<Nft[]>(this.nftsUrl + '/getAllOfUser?id=' + id).toPromise();
   }
 
+  public getNft(id: number): Promise<Nft> {
+    return this.http.get<Nft>(this.nftsUrl + '/get?id=' + id).toPromise();
+  }
+
 }

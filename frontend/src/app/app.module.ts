@@ -25,6 +25,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CartComponent } from './body/cart/cart.component';
 
 
 @NgModule({
@@ -37,7 +38,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     AccountComponent,
     NftComponent,
     LoginComponent,
-    PageNonTrouveeComponent
+    PageNonTrouveeComponent,
+    CartComponent
   ],
   imports: [
     BrowserModule,
