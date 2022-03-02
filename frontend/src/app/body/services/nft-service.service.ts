@@ -32,4 +32,9 @@ export class NftServiceService {
     const body = {id, userId};
     return this.http.post(this.nftsUrl + '/buy', body, requestOptions).toPromise();
   }
+
+  public getAllOfUser(id: number): Promise<Nft[]> {
+    return this.http.get<Nft[]>(this.nftsUrl + '/getAllOfUser?id=' + id).toPromise();
+  }
+
 }
