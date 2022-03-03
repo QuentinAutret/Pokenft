@@ -19,6 +19,9 @@ export class NftComponent implements OnInit {
   /** Permet l'affichage du bouton RETIRER sur le composant */
   @Input() retirer: boolean = false;
 
+  /** Permet l'affichage du bouton VENDRE sur le composant */
+  @Input() vendre: boolean = false;
+
   /** Récupère un NFT */    
   @Input() nft!: Nft;
 
@@ -73,6 +76,10 @@ export class NftComponent implements OnInit {
    */
   removeFromCart(): void {
     this.cartService.removeFromCart(+this.id);
+  }
+
+  sell(): void {
+    this.nftService.sellNft(+this.id, this.price);
   }
 
 }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { TokenService } from 'src/app/login/service/token.service';
+import { AccountService } from '../account/services/account.service';
 import { Nft } from '../model/nft.model';
 
 @Injectable({
@@ -14,7 +14,8 @@ export class NftServiceService {
 
   constructor(
     private http: HttpClient,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private accountService: AccountService
   ) {
     this.nftsUrl = 'http://localhost:8080/api/nft'
   }
@@ -42,8 +43,30 @@ export class NftServiceService {
     const requestOptions = {                                                                                                                                                                                 
       headers: new HttpHeaders(headerDict), 
     };
+    // Body de la requête
     const body = {id, userId};
     return this.http.post(this.nftsUrl + '/buy', body, requestOptions).toPromise();
+  }
+
+  /**
+   * Mets en vente un NFT à partir de son identifiant et du prix initial du NFT.
+   * @param id     Identifiant du NFT
+   * @param price  Prix initial du NFT
+   * @returns      Une Promise
+   */
+  public sellNft(id: number, price: number): Promise<any> {
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.tokenService.getToken()}`
+    }
+
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict), 
+    };
+    // Body de la requête
+    const body = { id, price };
+    this.accountService.removeFromTab(id);
+    return this.http.post(this.nftsUrl + '/sell', body, requestOptions).toPromise();
   }
 
   /**

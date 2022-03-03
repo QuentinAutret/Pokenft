@@ -38,9 +38,7 @@ export class CartService {
     // Parcours le panier pour supprimer le NFT ayant le même id que le paramètre
     this.cart.forEach((value,index)=>{
       if (+value.id === idNft) this.cart.splice(index, 1);
-      console.log(value.id + " " + idNft.toString());
     });
-    console.log(this.cart);
   }
 
 }
