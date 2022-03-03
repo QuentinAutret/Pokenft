@@ -12,19 +12,28 @@ import { TokenService } from './service/token.service';
 })
 export class LoginComponent implements OnInit {
   
+  /** Le formulaire de connexion */
   formGroup!: FormGroup;
 
+  /** Permet de savoir si le User est connecté */
   isLoggedIn!: boolean;
+
+  /** Message d'erreur lors de la connexion */
   errorMessage = '';
+
+  /** Tableau des rôles dont disposent le User connecté */
   roles: string[] = [];
   
   constructor( 
     private loginService: LoginService, 
     private tokenService: TokenService,
     private accountService: AccountService,
-    private router: Router) {
-  }     
+    private router: Router
+  ) {}     
 
+  /**
+   * Initialisation du formulaire de connexion.
+   */
   initForm(): void {
     this.formGroup = new FormGroup({
       username: new FormControl('', Validators.required),
@@ -36,6 +45,10 @@ export class LoginComponent implements OnInit {
     this.initForm();
   }
 
+  /**
+   * Gère la connexion d'un User. Enregistre ses informations (son token, ses rôles et informations de compte).
+   * Redirige sur la page d'accueil.
+   */
   onSubmit(): void {
     if (this.formGroup.valid) {
       this.loginService.login(this.formGroup.value).subscribe({

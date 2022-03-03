@@ -12,11 +12,17 @@ import { NftServiceService } from '../services/nft-service.service';
   styleUrls: ['./nft.component.scss']
 })
 export class NftComponent implements OnInit {
+  
+  /** Permet l'affichage du bouton AJOUTER sur le composant */
   @Input() ajouter: boolean = false;
+
+  /** Permet l'affichage du bouton RETIRER sur le composant */
   @Input() retirer: boolean = false;
-    
+
+  /** Récupère un NFT */    
   @Input() nft!: Nft;
 
+  /** Les différents attributs d'un NFT */
   id: string = "";
   name: string = "";
   creator: string = "";
@@ -44,19 +50,27 @@ export class NftComponent implements OnInit {
     this.owner = this.nft.owner;
   }
 
+  /**
+   * Permet l'achat d'un NFT.
+   */
   buyNft(): void {
     this.nftService.buyNft(this.id, this.accountService.getId()).then(result => {
-      console.log(result);
       this.owner = result.owner;
     }).catch(error => {
       console.error("error ", error);
     })
   }
 
+  /**
+   * Ajoute le NFT au panier.
+   */
   addToCart(): void {
     this.cartService.addToCart(+this.id);
   }
 
+  /**
+   * Supprime le NFT au panier.
+   */
   removeFromCart(): void {
     this.cartService.removeFromCart(+this.id);
   }

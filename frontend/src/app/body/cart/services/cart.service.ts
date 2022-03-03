@@ -17,7 +17,7 @@ export class CartService {
 
   /**
    * Ajoute au panier le NFT ayant pour identifiant celui donné en paramètre.
-   * @param idNft l'identifiant du NFT à ajouter
+   * @param idNft Identifiant du NFT à ajouter
    */
   async addToCart(idNft: number): Promise<void> {
     // Vérifie si le NFT n'est pas déjà présent dans le panier
@@ -32,7 +32,7 @@ export class CartService {
 
   /**
    * Supprime du panier le NFT ayant le même identifiant que celui en paramètre.
-   * @param idNft l'identifiant à supprimer
+   * @param idNft Identifiant du NFT à retirer
    */
   removeFromCart(idNft: number): void {    
     // Parcours le panier pour supprimer le NFT ayant le même id que le paramètre

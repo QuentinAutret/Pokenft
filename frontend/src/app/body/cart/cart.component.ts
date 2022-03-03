@@ -13,7 +13,10 @@ import { CartService } from './services/cart.service';
 })
 export class CartComponent implements OnInit {
 
+  /** Le panier de l'utilisateur connecté */
   cart: Nft[] = [];
+
+  /** Utilisateur connecté */
   public user!: User;
 
   constructor(
@@ -25,6 +28,9 @@ export class CartComponent implements OnInit {
     this.cart = this.cartService.getCart();
   }
 
+  /**
+   * Vide le panier et redirige sur la page principal.
+   */
   cancelCart(): void {
     this.cart = [];
     this.router.navigate(['home']);
