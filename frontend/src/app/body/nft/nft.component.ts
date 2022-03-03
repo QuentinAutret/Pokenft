@@ -12,6 +12,9 @@ import { NftServiceService } from '../services/nft-service.service';
   styleUrls: ['./nft.component.scss']
 })
 export class NftComponent implements OnInit {
+  @Input() ajouter: boolean = false;
+  @Input() retirer: boolean = false;
+    
   @Input() nft!: Nft;
 
   id: string = "";
@@ -52,6 +55,10 @@ export class NftComponent implements OnInit {
 
   addToCart(): void {
     this.cartService.addToCart(+this.id);
+  }
+
+  removeFromCart(): void {
+    this.cartService.removeFromCart(+this.id);
   }
 
 }

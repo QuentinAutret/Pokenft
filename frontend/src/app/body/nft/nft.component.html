@@ -8,7 +8,10 @@
         <mat-card-subtitle>Créateur : {{ this.creator }}</mat-card-subtitle>
         {{ this.price }} €
     </mat-card-content>
-    <mat-card-actions>
+    <mat-card-actions *ngIf="ajouter">
         <button (click)='addToCart()' mat-button>AJOUTER</button>
+    </mat-card-actions>
+    <mat-card-actions *ngIf="retirer">
+        <button (click)='removeFromCart()' mat-button>RETIRER</button>
     </mat-card-actions>
 </mat-card>

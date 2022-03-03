@@ -5,7 +5,7 @@
     <mat-card-content>
         <mat-grid-list cols="5">
             <mat-grid-tile *ngFor="let nft of cart">
-                <app-nft [nft]="nft"></app-nft>
+                <app-nft [retirer]="true" [nft]="nft"></app-nft>
             </mat-grid-tile>
         </mat-grid-list>
     </mat-card-content>
