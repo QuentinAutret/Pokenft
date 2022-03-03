@@ -147,6 +147,17 @@ public class NftController {
 		return nft;
 	}
 
+	@PostMapping("cancel")
+	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
+	public @ResponseBody
+	Nft cancel(@Valid @RequestBody NftCancelRequest nftCancelRequest) {
+		Nft nft = nftRepository.findById(nftCancelRequest.getId());
+		nft.setPrice(nftCancelRequest.getPrice());
+		nft.setForSale(false);
+		nftRepository.save(nft);
+		return nft;
+	}
+
 	@PostMapping("/buy")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
