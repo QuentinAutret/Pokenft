@@ -18,6 +18,10 @@
                 <mat-icon>login</mat-icon>
                 <span>Connexion</span>
             </button>
+            <button *ngIf="!isLoggedIn" routerLink="signup" mat-menu-item>
+                <mat-icon>vpn_key</mat-icon>
+                <span>Inscription</span>
+            </button>
             <button *ngIf="isLoggedIn" routerLink="cart" routerLinkActive="active" mat-menu-item>
                 <mat-icon>shopping_cart</mat-icon>
                 <span>Panier</span>

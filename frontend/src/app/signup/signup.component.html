@@ -1,0 +1,24 @@
+<div fxLayoutAlign="center center" fxFlexFiill class="main-div">
+    <mat-card fxFlex="25">
+        <mat-toolbar color="primary">Page de création de compte</mat-toolbar>
+        <form name="form" #f="ngForm" novalidate (ngSubmit)="onSubmit()" fxLayoutAlign="strech" fxLayout="column"
+            class="login-form" [formGroup]="formGroup">
+            <mat-form-field>
+                <input matInput required name="username" placeholder="Pseudo" formControlName="username">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput required name="firstname" placeholder="Prénom" formControlName="firstname">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput required name="lastname" placeholder="Nom" formControlName="lastname">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput required email name="email" placeholder="Email" type="email" formControlName="email">
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput required name="password" placeholder="Mot de passe" type="password" formControlName="password">
+            </mat-form-field>
+            <button mat-raised-button type="submit" class="mt-5" color="primary">Créer le compte</button>
+        </form>
+    </mat-card>
+</div>
