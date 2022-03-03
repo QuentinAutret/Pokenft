@@ -67,7 +67,7 @@ public class NftController {
 		return nftList;
 	}
 
-	@GetMapping("getAllOfUser")
+	@GetMapping("/getAllOfUser")
 	public @ResponseBody
 	Iterable<Nft> getAllOfUser(@RequestParam long id) {
 		List<Nft> nftList = new ArrayList<>();
@@ -79,7 +79,7 @@ public class NftController {
 		return nftList;
 	}
 
-	@GetMapping("getAllOnSaleOfUser")
+	@GetMapping("/getAllOnSaleOfUser")
 	public @ResponseBody
 	Iterable<Nft> getAllOnSaleOfUser(@RequestParam long id) {
 		List<Nft> nftList = new ArrayList<>();
@@ -91,7 +91,7 @@ public class NftController {
 		return nftList;
 	}
 
-	@GetMapping("getAllNotOnSaleOfUser")
+	@GetMapping("/getAllNotOnSaleOfUser")
 	public @ResponseBody
 	Iterable<Nft> getAllNotOnSaleOfUser(@RequestParam long id) {
 		List<Nft> nftList = new ArrayList<>();
@@ -136,7 +136,7 @@ public class NftController {
 		return ResponseEntity.ok(new MessageResponse("Nft modifié avec succès !"));
 	}
 
-	@PostMapping("sell")
+	@PostMapping("/sell")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
 	Nft sell(@Valid @RequestBody NftSellRequest nftSellRequest) {
