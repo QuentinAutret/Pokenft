@@ -79,6 +79,24 @@ export class NftServiceService {
   }
 
   /**
+   * Récupère tous les NFTs que le User a mis en vente à partir de son identifiant.
+   * @param id Identifiant du User connecté
+   * @returns  Une Promise de tableau de NFT
+   */
+  public getAllOnSaleOfUser(id: number): Promise<Nft[]> {
+    return this.http.get<Nft[]>(this.nftsUrl + '/getAllOnSaleOfUser?id=' + id).toPromise();
+  }
+
+  /**
+   * Récupère tous les NFTs que le User n'a pas mis en vente à partir de son identifiant.
+   * @param id Identifiant du User connecté
+   * @returns  Une Promise de tableau de NFT
+   */
+  public getAllNotOnSaleOfUser(id: number): Promise<Nft[]> {
+    return this.http.get<Nft[]>(this.nftsUrl + '/getAllNotOnSaleOfUser?id=' + id).toPromise();
+  }
+
+  /**
    * Récupère un NFT à partir de son identifiant.
    * @param id Identifiant du NFT
    * @returns  Une Promise du NFT

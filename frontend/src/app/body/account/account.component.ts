@@ -14,6 +14,8 @@ export class AccountComponent implements OnInit {
   /** Ensemble des NFTs du User connecté */
   tabNFT: Nft[] = [];
 
+  tabNftOnSale: Nft[] = [];
+
   /** User connecté */
   public user!: User;
 
@@ -28,8 +30,14 @@ export class AccountComponent implements OnInit {
       console.error("error ", error);
     })
     // Récupère tous les NFTs que l'User connecté possède
-    this.nftService.getAllOfUser(this.accountService.getId()).then(result => {
+    this.nftService.getAllNotOnSaleOfUser(this.accountService.getId()).then(result => {
       this.tabNFT = result;
+    }).catch(error => {
+      console.error("error ", error);
+    })
+    // Récupère tous les NFTs en vente du User
+    this.nftService.getAllOnSaleOfUser(this.accountService.getId()).then(result => {
+      this.tabNftOnSale = result;
     }).catch(error => {
       console.error("error ", error);
     })
