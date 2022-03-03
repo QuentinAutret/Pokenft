@@ -19,6 +19,7 @@ export class SignupService {
     this.signupUrl = 'http://localhost:8080/api/auth';
   }
 
+  /** Requête permettant la création d'un compte User */
   signup(data: any): Observable<any> {
     return this.http.put<User>(this.signupUrl + '/signup', data);
   }

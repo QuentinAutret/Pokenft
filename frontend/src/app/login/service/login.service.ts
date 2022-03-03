@@ -10,9 +10,15 @@ import { Router } from '@angular/router';
 })
 export class LoginService implements OnInit {
   
+  /** Souscription qui change le statut de connexion du User.
+   * Connecté = true, false sinon.
+   */
   connectez: Subject<boolean> = new Subject();
+
+  /** URL du serveur pour les requêtes de connexion de compte */
   loginUrl: string;
-  result: any;
+
+  /** Message d'erreur de la requête */
   errorMessage = '';
 
   constructor(
