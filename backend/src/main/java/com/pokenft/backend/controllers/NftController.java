@@ -150,9 +150,8 @@ public class NftController {
 	@PostMapping("cancel")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
-	Nft cancel(@Valid @RequestBody NftCancelRequest nftCancelRequest) {
-		Nft nft = nftRepository.findById(nftCancelRequest.getId());
-		nft.setPrice(nftCancelRequest.getPrice());
+	Nft cancel(@RequestParam long id) {
+		Nft nft = nftRepository.findById(id);
 		nft.setForSale(false);
 		nftRepository.save(nft);
 		return nft;
