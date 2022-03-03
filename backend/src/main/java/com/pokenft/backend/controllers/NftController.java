@@ -79,6 +79,30 @@ public class NftController {
 		return nftList;
 	}
 
+	@GetMapping("getAllOnSaleOfUser")
+	public @ResponseBody
+	Iterable<Nft> getAllOnSaleOfUser(@RequestParam long id) {
+		List<Nft> nftList = new ArrayList<>();
+		for (Nft nft : nftRepository.findAll()) {
+			if (nft.getOwner() != null) {
+				if (nft.getOwner().getId() == id && nft.isForSale()) nftList.add(nft);
+			}
+		}
+		return nftList;
+	}
+
+	@GetMapping("getAllNotOnSaleOfUser")
+	public @ResponseBody
+	Iterable<Nft> getAllNotOnSaleOfUser(@RequestParam long id) {
+		List<Nft> nftList = new ArrayList<>();
+		for (Nft nft : nftRepository.findAll()) {
+			if (nft.getOwner() != null) {
+				if (nft.getOwner().getId() == id && !nft.isForSale()) nftList.add(nft);
+			}
+		}
+		return nftList;
+	}
+
 	@DeleteMapping("/delete")
 	@PreAuthorize("hasRole('ADMIN')")
 	public @ResponseBody
