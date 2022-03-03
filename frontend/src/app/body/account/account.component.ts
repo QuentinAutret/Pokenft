@@ -33,6 +33,7 @@ export class AccountComponent implements OnInit {
     }).catch(error => {
       console.error("error ", error);
     })
+    this.accountService.setTabNft(this.tabNFT);
   }
 
 }
