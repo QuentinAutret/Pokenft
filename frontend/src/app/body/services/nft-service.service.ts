@@ -70,6 +70,25 @@ export class NftServiceService {
   }
 
   /**
+   * Annule la mise en vente d'un NFT à partir de son identifiant et du prix initial du NFT.
+   * @param id     Identifiant du NFT
+   * @returns      Une Promise
+   */
+  public cancel(id: number): Promise<any> {
+    const headerDict = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.tokenService.getToken()}`
+    }
+
+    const requestOptions = {                                                                                                                                                                                 
+      headers: new HttpHeaders(headerDict), 
+    };
+    // Body de la requête
+    const body = { id };
+    return this.http.post(this.nftsUrl + '/cancel', body, requestOptions).toPromise();
+  }
+
+  /**
    * Récupère tous les NFTs du User connecté à partir de son identifiant.
    * @param id Identifiant du User connecté
    * @returns  Une Promise de tableau de NFT

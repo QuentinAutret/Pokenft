@@ -8,9 +8,6 @@
             {{ roles.name }}
         </mat-card-content>
     </mat-card-content>
-    <mat-card-actions>
-        <button mat-button>ACHETER</button>
-    </mat-card-actions>
 </mat-card>
 <mat-card class="example-card">
     <mat-card-content>
@@ -24,7 +21,7 @@
     <mat-card-subtitle>Vos NFT en vente :</mat-card-subtitle>
     <mat-grid-list cols="5">
         <mat-grid-tile *ngFor="let nft of tabNftOnSale">
-            <app-nft [nft]="nft"></app-nft>
+            <app-nft [annuler]="true" [nft]="nft"></app-nft>
         </mat-grid-tile>
     </mat-grid-list>
 </mat-card>

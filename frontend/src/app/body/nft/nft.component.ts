@@ -22,6 +22,9 @@ export class NftComponent implements OnInit {
   /** Permet l'affichage du bouton VENDRE sur le composant */
   @Input() vendre: boolean = false;
 
+  /** Permet l'affichage du bouton ANNULER sur le composant */
+  @Input() annuler: boolean = false;
+
   /** Récupère un NFT */    
   @Input() nft!: Nft;
 
@@ -78,8 +81,28 @@ export class NftComponent implements OnInit {
     this.cartService.removeFromCart(+this.id);
   }
 
+  /**
+   * Mets en vente le NFT.
+   */
   sell(): void {
-    this.nftService.sellNft(+this.id, this.price);
+    this.nftService.sellNft(+this.id, this.price).then(result => {
+      this.accountService.addToTabNftOnSale(result);
+      this.accountService.removeFromTab(result.id);
+    }).catch(error => {
+      console.error("error ", error);
+    })
+  }
+
+  /**
+   * Annule la mise en vente du NFT.
+   */
+  cancel(): void {
+    this.nftService.cancel(+this.id).then(result => {
+      this.accountService.addToTab(result);
+      this.accountService.removeFromTabNftOnSale(result.id);
+    }).catch(error => {
+      console.error("error ", error);
+    })
   }
 
 }

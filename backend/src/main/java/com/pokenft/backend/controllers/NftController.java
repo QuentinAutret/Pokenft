@@ -147,7 +147,7 @@ public class NftController {
 		return nft;
 	}
 
-	@PostMapping("cancel")
+	@PostMapping("/cancel")
 	@PreAuthorize("hasRole('USER') or hasRole('MODERATOR') or hasRole('ADMIN')")
 	public @ResponseBody
 	Nft cancel(@Valid @RequestBody NftCancelRequest nftCancelRequest) {

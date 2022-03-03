@@ -17,4 +17,7 @@
     <mat-card-actions *ngIf="vendre">
         <button (click)='sell()' mat-button>VENDRE</button>
     </mat-card-actions>
+    <mat-card-actions *ngIf="annuler">
+        <button (click)='cancel()' mat-button>ANNULER</button>
+    </mat-card-actions>
 </mat-card>

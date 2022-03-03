@@ -12,6 +12,9 @@ export class AccountService {
   /** Ensemble des NFTs du User connecté */
   private tabNFT: Nft[] = [];
 
+  /** Ensemble des NFTs en vente du User connecté */
+  private tabNftOnSale: Nft[] = [];
+
   /** URL du serveur pour les requêtes du User */
   private usersUrl: string;
 
@@ -49,9 +52,31 @@ export class AccountService {
     this.tabNFT = tab;
   }
 
+  public getTabNftOnSale(): Nft[] {
+    return this.tabNftOnSale;
+  }
+
+  public setTabNftOnSale(tab: Nft[]): void {
+    this.tabNftOnSale = tab;
+  }
+
   public removeFromTab(id: number): void {
     this.tabNFT.forEach((value,index)=>{
       if (+value.id === id) this.tabNFT.splice(index, 1);
     });
+  }
+
+  public removeFromTabNftOnSale(id: number): void {
+    this.tabNftOnSale.forEach((value,index)=>{
+      if (+value.id === id) this.tabNftOnSale.splice(index, 1);
+    });
+  }
+
+  public addToTab(nft: Nft): void {
+    this.tabNFT.push(nft);
+  }
+
+  public addToTabNftOnSale(nft: Nft): void {
+    this.tabNftOnSale.push(nft);
   }
 }
