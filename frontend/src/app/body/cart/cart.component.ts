@@ -16,15 +16,25 @@ export class CartComponent implements OnInit {
   /** Le panier de l'utilisateur connecté */
   cart: Nft[] = [];
 
+  /** Tableau des identifiants des NFTs du panier */
+  nftsId: number[] = [];
+
   /** Utilisateur connecté */
   public user!: User;
 
   constructor(
     private router: Router,
-    private cartService: CartService
+    private cartService: CartService,
+    private accountService: AccountService
   ) { }
 
   ngOnInit(): void {
+    // Récupère les informations du User à partir de son identifiant
+    this.accountService.getAccountById(this.accountService.getId()).then(result => {
+      this.user = result;
+    }).catch(error => {
+      console.error("error ", error);
+    })
     this.cart = this.cartService.getCart();
   }
 
@@ -34,6 +44,22 @@ export class CartComponent implements OnInit {
   cancelCart(): void {
     this.cart = [];
     this.router.navigate(['home']);
+  }
+
+  /**
+   * Achète le contenu du panier.
+   */
+  buyCart(): void {
+    this.cart.forEach((value, index) =>
+      this.nftsId.push(+value.id)
+    );
+    console.log(this.nftsId);
+    console.log("this.user.id : " + this.user.id);
+    this.cartService.buyCart(this.nftsId, this.user.id).then(result => {
+      this.router.navigate(['account']);
+    }).catch(error => {
+      console.error("error ", error);
+    })
   }
 
 }
