@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../body/account/services/account.service';
+import { ErrorService } from '../page-non-trouvee/services/error.service';
 import { LoginService } from './service/login.service';
 import { TokenService } from './service/token.service';
 
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService, 
     private tokenService: TokenService,
     private accountService: AccountService,
+    private errorService: ErrorService,
     private router: Router
   ) {}     
 
@@ -62,8 +64,9 @@ export class LoginComponent implements OnInit {
           },
         error: (err) => {
           this.errorMessage = err.error.message;
+          this.errorService.setError(err.error.message);
           this.loginService.connectez.next(false);
-          this.router.navigate(['login']);
+          this.router.navigate(['**']);
         }
       });
     }

@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AccountService } from '../body/account/services/account.service';
 import { TokenService } from '../login/service/token.service';
+import { ErrorService } from '../page-non-trouvee/services/error.service';
 import { SignupService } from './services/signup.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class SignupComponent implements OnInit {
   errorMessage: any;
   
   constructor(
-    private accountService: AccountService,
+    private errorService: ErrorService,
     private router: Router,
     private signupService: SignupService
   ) { }
@@ -51,11 +52,12 @@ export class SignupComponent implements OnInit {
         next: (data) => {
           console.log("ça marche !");
           console.log(data);
-          this.router.navigate(['home']);
+          this.router.navigate(['login']);
           },
         error: (err) => {
           this.errorMessage = err.error.message;
-          this.router.navigate(['login']);
+          this.errorService.setError(err.error.message);
+          this.router.navigate(['**']);
         }
       });
     }
